@@ -12,9 +12,18 @@ for (var i = 0; i < numberOfDrumButtons; i++) {
 
 //Detecting Keyboard Press 
 document.addEventListener("keydown", function(event){
-    makeSound(event.key.toLowerCase());
-    buttonAnimation(event.key.toLowerCase());
+    var drumKeys = [];
+    for (var i = 0; i < numberOfDrumButtons; i++) {
+        drumKeys.push(document.querySelectorAll(".drum")[i].innerHTML);
     }
+    var pressedKey = event.key.toLowerCase();
+    if (drumKeys.includes(pressedKey)){
+    makeSound(pressedKey);
+    buttonAnimation(pressedKey);
+    } else {
+        console.log("Invalid Key");
+    }
+}
 );
 
 /**
@@ -62,10 +71,8 @@ function makeSound(key){
 
 function buttonAnimation(currentKey){
     var activeButton = document.querySelector("." + currentKey);
-    if (!activeButton) {
-        return;
-    } else {    activeButton.classList.add("pressed");
+    activeButton.classList.add("pressed");
     setTimeout(() => {
         activeButton.classList.remove("pressed");
-    }, 100);}
+    }, 100);
 }
